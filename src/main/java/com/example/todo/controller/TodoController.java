@@ -27,8 +27,8 @@ public class TodoController {
      return todoService.getTodos();
    }
 
-    /*@GetMapping("/todos/{id}")
-    public Todo getTodoById(@PathVariable("Id") int todoId) {
+    @GetMapping("/todos/{id}")
+    public Todo getTodoById(@PathVariable("id") int todoId) {
         return todoService.getTodoById(todoId);
     }
 
@@ -45,7 +45,7 @@ public class TodoController {
     @DeleteMapping("/todos/{id}")
     public void deleteTodo(@PathVariable("id") int todoId){
         todoService.deleteTodo(todoId);
-    }*/
+    }
 
 }
 
