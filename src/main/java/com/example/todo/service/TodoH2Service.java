@@ -29,10 +29,10 @@ public class TodoH2Service implements TodoRepository {
     @Autowired
     private JdbcTemplate db;
 
-    /*@Override
+    @Override
     public void deleteTodo(int todoId) {
 
-        db.update("delete from todolist where id = ?", todoId);
+        db.update("delete from TODOLIST where id = ?", todoId);
       
     }
 
@@ -40,15 +40,17 @@ public class TodoH2Service implements TodoRepository {
     public Todo updateTodo(int todoId, Todo todo) {
 
         if(todo.getTodo() != null){
-            db.update("update todolist set todo = ? where id = ?", todo.getTodo(), todoId);
+            db.update("update TODOLIST set todo = ? where id = ?", todo.getTodo(), todoId);
+        }
+
+	if(todo.getPriority() != null){
+            db.update("update TODOLIST set priority = ? where id = ?", todo.getPriority(), todoId);
         }
         
         if(todo.getStatus() != null){
-            db.update("update todolist set status = ? where id = ?", todo.getStatus(), todoId);
+            db.update("update TODOLIST set status = ? where id = ?", todo.getStatus(), todoId);
         }
-        if(todo.getPriority() != null){
-            db.update("update todolist set priority = ? where id = ?", todo.getPriority(), todoId);
-        }
+        
         
         return getTodoById(todoId);
     }
@@ -56,10 +58,10 @@ public class TodoH2Service implements TodoRepository {
     @Override
     public Todo addTodo(Todo todo) {
 
-        db.update("insert into todolist(todo, status, priority) values (?, ?, ?)", todo.getTodo(), todo.getStatus(), todo.getPriority());
+        db.update("insert into TODOLIST(todo, priority, status) values (?, ?, ?)", todo.getTodo(), todo.getPriority(), todo.getStatus());
 
-            Todo savedTodo = db.queryForObject("select * from todolist where todo = ? and status = ? and priority = ?",
-		                                    new TodoRowMapper(), todo.getTodo(), todo.getStatus(), todo.getPriority());
+            Todo savedTodo = db.queryForObject("select * from TODOLIST where todo = ? and priority = ? and status = ?",
+		                                    new TodoRowMapper(), todo.getTodo(), todo.getPriority(), todo.getStatus());
 
 
             return savedTodo;
@@ -70,7 +72,7 @@ public class TodoH2Service implements TodoRepository {
 
       try{
         
-        Todo todo = db.queryForObject("select * from todolist where id = ?", new TodoRowMapper(), todoId);
+        Todo todo = db.queryForObject("select * from TODOLIST where id = ?", new TodoRowMapper(), todoId);
         
         return todo;
         }
@@ -79,7 +81,7 @@ public class TodoH2Service implements TodoRepository {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
       }
       
-    }*/
+    }
 
     @Override
     public ArrayList<Todo> getTodos() {
